@@ -1,27 +1,24 @@
-import * as React from 'react';
-import DispatchContext from '../DispatchContext';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-axios.defaults.baseURL="http://localhost:8000"
-
-
+import * as React from "react";
+import DispatchContext from "../DispatchContext";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+axios.defaults.baseURL = "https://transportapp-backend.herokuapp.com";
 
 const theme = createTheme();
 
 export default function SignUp() {
-
   const appDispatch = React.useContext(DispatchContext);
   const navigate = useNavigate();
 
@@ -29,12 +26,21 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    const response = await axios.post('/register',{firstname:data.get('firstName'),lastname:data.get('lastName'),email:data.get('email'),password:data.get('password'),aadharno:data.get('aadhar')}) 
-    if(response.data){
-      appDispatch({ type: "login", data: response.data ,role:"user"});
-      navigate('/')
+    try {
+      const response = await axios.post("/register", {
+        firstname: data.get("firstName"),
+        lastname: data.get("lastName"),
+        email: data.get("email"),
+        password: data.get("password"),
+        aadharno: data.get("aadhar"),
+      });
+      if (response.data) {
+        appDispatch({ type: "login", data: response.data, role: "user" });
+        navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
     }
-
   };
 
   return (
@@ -44,18 +50,23 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -110,12 +121,10 @@ export default function SignUp() {
                   autoComplete="new-aadhar"
                 />
               </Grid>
-          
             </Grid>
             <Button
               type="submit"
               fullWidth
-              
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
@@ -130,7 +139,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        
       </Container>
     </ThemeProvider>
   );

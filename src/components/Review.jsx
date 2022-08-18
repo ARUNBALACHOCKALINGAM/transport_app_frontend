@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-axios.defaults.baseURL="http://localhost:8000"
+axios.defaults.baseURL="https://transportapp-backend.herokuapp.com"
 
 const products = [
   {

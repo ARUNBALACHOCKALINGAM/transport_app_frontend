@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-axios.defaults.baseURL="http://localhost:8000"
+
 
 const theme = createTheme();
 
@@ -30,8 +30,8 @@ export default function Login() {
     event.preventDefault();
     console.log(email);
     console.log(password);
-    const response= await axios.post("/login", { email, password });
-    console.log(response.data);
+    const response= await axios.post("https://transportapp-backend.herokuapp.com/login", { email, password });
+
     if(response.data.role==="user"){
       appDispatch({ type: "login", data: response.data ,role:"user"});
       appDispatch({
@@ -50,12 +50,12 @@ export default function Login() {
   };
 
   const handleEmailChange = (event) => {
-      setEmail(event.target.value);
-      console.log(event.target.value);
+      setEmail((prev) => event.target.value);
+      
   }
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword((prev) => event.target.value);
 }
 
   return (

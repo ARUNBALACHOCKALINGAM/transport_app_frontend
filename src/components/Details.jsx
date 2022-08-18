@@ -18,7 +18,7 @@ import Review from './Review';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Dispatchcontext from '../DispatchContext';
-axios.defaults.baseURL="http://localhost:8000"
+axios.defaults.baseURL="https://transportapp-backend.herokuapp.com"
 
 
 

@@ -11,15 +11,10 @@ import FlashMessages from './components/Flash';
 import StateContext from './StateContext';
 import DispatchContext from './DispatchContext';
 import Axios from 'axios';
+Axios.defaults.baseURL="https://transportapp-backend.herokuapp.com"
 
 
 function App() {
-
-
-
-
-  
-  
 
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("appToken")),
@@ -46,8 +41,7 @@ function App() {
           draft.flashMessages.push(action.value);
           return;
 
-         
-      
+
     }
   }
   
